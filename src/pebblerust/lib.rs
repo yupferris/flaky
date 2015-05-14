@@ -68,6 +68,24 @@ pub fn window_set_background_color(window: *mut Window, color: GColor) {
     }
 }
 
+pub fn layer_create(frame: GRect) -> *mut Layer {
+    unsafe {
+        c::layer_create(frame)
+    }
+}
+
+pub fn layer_mark_dirty(layer: *mut Layer) {
+    unsafe {
+        c::layer_mark_dirty(layer);
+    }
+}
+
+pub fn layer_set_update_proc(layer: *mut Layer, update_proc: LayerUpdateProc) {
+    unsafe {
+        c::layer_set_update_proc(layer, update_proc);
+    }
+}
+
 pub fn layer_get_bounds(layer: *mut Layer) -> GRect {
   unsafe {
     c::layer_get_bounds(layer)
@@ -123,4 +141,38 @@ pub fn window_set_click_config_provider_with_context<T>(window: *mut Window,
     let fn_ptr: extern fn(*mut u8) = transmute(provider);
     c::window_set_click_config_provider_with_context(window, fn_ptr, context_ptr);
   }
+}
+
+pub fn graphics_context_set_fill_color(context: *mut GContext, color: GColor) {
+    unsafe {
+        c::graphics_context_set_fill_color(context, color);
+    }
+}
+
+pub fn graphics_draw_pixel(context: *mut GContext, point: GPoint) {
+    unsafe {
+        c::graphics_draw_pixel(context, point);
+    }
+}
+
+fn corner_mask_to_bitfield(corner_mask: GCornerMask) -> u32 {
+    // For some reason "|"'ng these values didn't work here..
+    match corner_mask {
+        GCornerMask::None => 0x00,
+        GCornerMask::TopLeft => 0x01,
+        GCornerMask::TopRight => 0x02,
+        GCornerMask::BottomLeft => 0x04,
+        GCornerMask::BottomRight => 0x08,
+        GCornerMask::All => 0x0f,
+        GCornerMask::Top => 0x03,
+        GCornerMask::Bottom => 0x0c,
+        GCornerMask::Left => 0x05,
+        GCornerMask::Right => 0x0a
+    }
+}
+
+pub fn graphics_fill_rect(context: *mut GContext, rect: GRect, corner_radius: u16, corner_mask: GCornerMask) {
+    unsafe {
+        c::graphics_fill_rect(context, rect, corner_radius, corner_mask_to_bitfield(corner_mask));
+    }
 }

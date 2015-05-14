@@ -10,6 +10,11 @@ pub struct TextLayer;
 pub struct ClickRecognizer;
 
 #[repr(C)]
+pub struct GContext;
+
+pub type LayerUpdateProc = extern fn(*mut Layer, *mut GContext);
+
+#[repr(C)]
 pub struct GPoint {
   pub x: u16,
   pub y: u16,
@@ -47,6 +52,19 @@ pub enum GColor {
     Black = 0,
     White = 1,
     Clear = 0xffffffff
+}
+
+pub enum GCornerMask {
+    None,
+    TopLeft,
+    TopRight,
+    BottomLeft,
+    BottomRight,
+    All,
+    Top,
+    Bottom,
+    Left,
+    Right,
 }
 
 pub type ClickRecognizerRef = *mut ClickRecognizer;

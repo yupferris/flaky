@@ -14,6 +14,10 @@ extern {
     pub fn window_set_background_color(window: *mut Window, color: GColor);
     
     pub fn layer_get_bounds(layer: *mut Layer) -> GRect;
+    pub fn layer_create(frame: GRect) -> *mut Layer;
+    pub fn layer_mark_dirty(layer: *mut Layer);
+    pub fn layer_set_update_proc(layer: *mut Layer, update_proc: LayerUpdateProc);
+    
     pub fn text_layer_create(frame: GRect) -> *mut TextLayer;
     pub fn text_layer_set_text(layer: *mut TextLayer, text: &str);
     pub fn text_layer_set_text_alignment(layer: *mut TextLayer, alignment: GTextAlignment);
@@ -21,6 +25,10 @@ extern {
     pub fn text_layer_set_text_color(layer: *mut TextLayer, color: GColor);
     pub fn layer_add_child(parent: *mut Layer, child: *mut Layer);
     pub fn text_layer_get_layer(text_layer: *mut TextLayer) -> *mut Layer;
+
+    pub fn graphics_context_set_fill_color(context: *mut GContext, color: GColor);
+    pub fn graphics_draw_pixel(context: *mut GContext, point: GPoint);
+    pub fn graphics_fill_rect(context: *mut GContext, rect: GRect, corner_radius: u16, corner_mask: u32);
 }
 
 

@@ -18,6 +18,15 @@ mod pebblerust {
     pub mod zero;
 }
 
+struct Position {
+    x: i32,
+    y: i32
+}
+
+struct Flake {
+    pos: Position
+}
+
 extern fn window_load_handler(window: *mut Window) {
     let window_layer = window_get_root_layer(window);
     let window_bounds = layer_get_bounds(window_layer);
@@ -26,6 +35,12 @@ extern fn window_load_handler(window: *mut Window) {
         origin: GPoint { x: 0, y: 72 },
         size: GSize { w: window_bounds.size.w, h: 20 }
     };
+
+    let flakes_layer = layer_create(window_bounds);
+
+    layer_set_update_proc(flakes_layer, flakes_layer_update_proc);
+
+    layer_add_child(window_layer, flakes_layer);
     
     let text_layer = text_layer_create(text_bounds);
     
@@ -40,6 +55,19 @@ extern fn window_load_handler(window: *mut Window) {
 extern fn window_unload_handler(_: *mut Window) { }
 extern fn window_appear_handler(_: *mut Window) { }
 extern fn window_disappear_handler(_: *mut Window) { }
+
+static mut flake_pos: i32 = 0;
+
+extern fn flakes_layer_update_proc(layer: *mut Layer, context: *mut GContext) {
+    unsafe {
+        graphics_context_set_fill_color(context, GColor::White);
+        graphics_fill_rect(context, GRect { origin: GPoint { x: 40, y: flake_pos as u16 }, size: GSize { w: 20, h: 20 } }, 0, GCornerMask::None);
+    
+        //flake_pos += 1;
+    
+        layer_mark_dirty(layer); // yolo
+    }
+}
 
 #[no_mangle]
 pub extern fn main() -> i32 {
