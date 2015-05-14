@@ -62,6 +62,12 @@ pub fn window_get_root_layer(window: *mut Window) -> *mut Layer {
   }
 }
 
+pub fn window_set_background_color(window: *mut Window, color: GColor) {
+    unsafe {
+        c::window_set_background_color(window, color);
+    }
+}
+
 pub fn layer_get_bounds(layer: *mut Layer) -> GRect {
   unsafe {
     c::layer_get_bounds(layer)
@@ -78,6 +84,24 @@ pub fn text_layer_set_text(layer: *mut TextLayer, text: &str) {
   unsafe {
     c::text_layer_set_text(layer, text);
   }
+}
+
+pub fn text_layer_set_text_alignment(layer: *mut TextLayer, alignment: GTextAlignment) {
+    unsafe {
+        c::text_layer_set_text_alignment(layer, alignment);
+    }
+}
+
+pub fn text_layer_set_background_color(layer: *mut TextLayer, color: GColor) {
+    unsafe {
+        c::text_layer_set_background_color(layer, color);
+    }
+}
+
+pub fn text_layer_set_text_color(layer: *mut TextLayer, color: GColor) {
+    unsafe {
+        c::text_layer_set_text_color(layer, color);
+    }
 }
 
 pub fn layer_add_child(parent: *mut Layer, child: *mut Layer) {

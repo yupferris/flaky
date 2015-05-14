@@ -6,34 +6,16 @@ use pebblerust::lib::*;
 use pebblerust::types::*;
 
 #[lang="sized"]
-trait Sized {}
+trait Sized { }
 
 #[lang="copy"]
-trait Copy {}
+trait Copy { }
 
 mod pebblerust {
-  pub mod lib;
-  pub mod c;
-  pub mod types;
-  pub mod zero;
-}
-
-extern fn select_click_handler(_: ClickRecognizerRef, text_layer: *mut TextLayer) {
-    text_layer_set_text(text_layer, "Select!\0");
-}
-
-extern fn up_click_handler(_: ClickRecognizerRef, text_layer: *mut TextLayer) {
-    text_layer_set_text(text_layer, "Up!\0");
-}
-
-extern fn down_click_handler(_: ClickRecognizerRef, text_layer: *mut TextLayer) {
-    text_layer_set_text(text_layer, "Down!\0");
-}
-
-extern fn click_config_provider(_: *mut TextLayer) {
-    window_single_click_subscribe(1, up_click_handler);
-    window_single_click_subscribe(2, select_click_handler);
-    window_single_click_subscribe(3, down_click_handler);
+    pub mod lib;
+    pub mod c;
+    pub mod types;
+    pub mod zero;
 }
 
 extern fn window_load_handler(window: *mut Window) {
@@ -44,12 +26,15 @@ extern fn window_load_handler(window: *mut Window) {
         origin: GPoint { x: 0, y: 72 },
         size: GSize { w: window_bounds.size.w, h: 20 }
     };
+    
     let text_layer = text_layer_create(text_bounds);
-
-    text_layer_set_text(text_layer, "Press a button\0");
+    
+    text_layer_set_text_alignment(text_layer, GTextAlignment::Center);
+    text_layer_set_text(text_layer, "DAT DRIZZLE THO\0");
+    text_layer_set_background_color(text_layer, GColor::Clear);
+    text_layer_set_text_color(text_layer, GColor::White);
+    
     layer_add_child(window_layer, text_layer_get_layer(text_layer));
-
-    window_set_click_config_provider_with_context(window, click_config_provider, text_layer);
 }
 
 extern fn window_unload_handler(_: *mut Window) { }
@@ -67,6 +52,8 @@ pub extern fn main() -> i32 {
         disappear: window_disappear_handler
     };
     window_set_window_handlers(window, window_handlers);
+
+    window_set_background_color(window, GColor::Black);
 
     window_stack_push(window, true);
 

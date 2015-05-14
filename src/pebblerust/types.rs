@@ -35,4 +35,18 @@ pub struct WindowHandlers {
   pub unload: WindowHandler
 }
 
+#[repr(C)]
+pub enum GTextAlignment {
+    Left,
+    Center,
+    Right
+}
+
+#[repr(C)]
+pub enum GColor {
+    Black = 0,
+    White = 1,
+    Clear = 0xffffffff
+}
+
 pub type ClickRecognizerRef = *mut ClickRecognizer;
