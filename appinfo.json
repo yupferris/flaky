@@ -1,0 +1,24 @@
+{
+  "uuid": "378d5549-f876-4733-8c77-76bf80b8ec0f",
+  "shortName": "flaky",
+  "longName": "flaky",
+  "companyName": "ferris",
+  "versionCode": 1,
+  "versionLabel": "1.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": [
+      {
+        "type": "png",
+        "name": "IMAGE_RUST_LOGO",
+        "file": "images/rust-logo.png",
+        "menuIcon": true
+      }
+    ]
+  }
+}
