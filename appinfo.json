@@ -15,8 +15,8 @@
     "media": [
       {
         "type": "png",
-        "name": "IMAGE_RUST_LOGO",
-        "file": "images/rust-logo.png",
+        "name": "IMAGE_FLAKY",
+        "file": "images/flaky.png",
         "menuIcon": true
       }
     ]
